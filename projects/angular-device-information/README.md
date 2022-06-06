@@ -70,6 +70,10 @@ $ npm install angular-device-information --save
 
 ```
 
+## License
+
+[MIT](https://github.com/becher/angular-device-information/blob/master/LICENSE)
+
 
 
  
