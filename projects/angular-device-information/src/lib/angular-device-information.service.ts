@@ -38,7 +38,6 @@ export class AngularDeviceInformationService {
   }
 
   /**
-   * @author Henchiri Becher
    * @desc Sets the initial value of the device when the service is initiated.
    * This value is later accessible for usage
    */
@@ -137,9 +136,6 @@ export class AngularDeviceInformationService {
       majorVersion = parseInt(navigator.appVersion, 10);
     }
 
-    // mobile version
-    // let mobile = /Mobile|BlackBerry|Playbook|mini|Fennec|Android|iP(ad|od|hone)/.test(nVer);
-
     // cookie
     let cookieEnabled = (navigator.cookieEnabled) ? true : false;
 
@@ -230,7 +226,6 @@ export class AngularDeviceInformationService {
   }
 
   /**
-   * @author Henchiri Becher
    * @desc Returns the device information
    * @returns the device information object.
    */
@@ -239,7 +234,6 @@ export class AngularDeviceInformationService {
   }
 
   /**
-   * * @author Henchiri Becher
    * @desc Compares the current device info with the mobile devices to check
    * if the current device is a mobile and also check current device is tablet so it will return false.
    * @returns whether the current device is a mobile
@@ -255,7 +249,6 @@ export class AngularDeviceInformationService {
   }
 
   /**
-   * * @author Henchiri Becher
    * @desc Compares the current device info with the tablet devices to check
    * if the current device is a tablet.
    * @returns whether the current device is a tablet
@@ -268,7 +261,6 @@ export class AngularDeviceInformationService {
   }
 
   /**
-   * * @author Henchiri Becher
    * @desc Compares the current device info with the desktop devices to check
    * if the current device is a desktop device.
    * @returns whether the current device is a desktop device
