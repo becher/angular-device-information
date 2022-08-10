@@ -1,27 +1,79 @@
-# MyWorkspace
+<a href="#">
+  <h1 align="center">angular-device-information</h1>
+</a>
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.15.
 
-## Development server
+## Dependencies
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+**Angular-device-information 1.0.6** is available for **Angular 8.x** to **Angular 14.x**  
 
-## Code scaffolding
+## Installation
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+To install this library, run:
 
-## Build
+```bash
+$ npm install angular-device-information --save
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+**In your app.module.ts file add AngularDeviceInformationService as providers(Optional)**
 
-## Running unit tests
+```typescript
+  import { NgModule } from '@angular/core';
+  import { BrowserModule } from '@angular/platform-browser';
+  import { FormsModule } from '@angular/forms';
+  
+  import { AppComponent } from './app.component';
+  import { AngularDeviceInformationService } from 'angular-device-information';
+  
+  @NgModule({
+    imports:      [ BrowserModule, FormsModule ],
+    providers:[AngularDeviceInformationService],
+    declarations: [ AppComponent ],
+    bootstrap:    [ AppComponent ]
+  })
+  
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+ ````
 
-## Running end-to-end tests
+ **In your component where you want to use the Device Service**
+ ```typescript
+  import { Component } from '@angular/core';
+  ...
+  import { AngularDeviceInformationService } from 'angular-device-information';
+  ...
+  @Component({
+    selector: 'home',  // <home></home>
+    styleUrls: [ './home.component.scss' ],
+    templateUrl: './home.component.html',
+    ...
+  })
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+  export class HomeComponent {
+  
+    constructor(private deviceInformationService: AngularDeviceInformationService) {
+  
+       console.log(deviceInformationService.isMobile());  // returns if the device is a mobile device (android / iPhone / windows-phone etc)
+       console.log(deviceInformationService.isTablet());  // returns if the device is a tablet (tablet iPad etc)
+       console.log(deviceInformationService.isDesktop()); // returns if the app is running on a Desktop browser.
+       console.log(deviceInformationService.getDeviceType()); // returns if the app is running on a Desktop browser.
+       console.log(deviceInformationService.getDeviceInfo().os);  // returns os name like Windows/Andtoid/iOS/Linux/Mac OS X etc
+       console.log(deviceInformationService.getDeviceInfo().osVersion);  // returns os version like 10/8.1/7 ...etc
+       console.log(deviceInformationService.getDeviceInfo().browser);  // returns browser name like chrome/firefox ...etc
+       console.log(deviceInformationService.getDeviceInfo().browserVersion);  // returns browser version as number
+       console.log(deviceInformationService.getDeviceInfo().browserMajorVersion);  // returns full browser version as number
+       console.log(deviceInformationService.getDeviceInfo().screen_resolution);  // returns screnn size like 1390x860/640x800 ...etc
+       console.log(deviceInformationService.getDeviceInfo().cookies);  // returns cookies enabled or no 
+       console.log(deviceInformationService.getDeviceInfo().userAgent);  // returns userAgent
+    }
+    
+  }
 
-## Further help
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+## License
+
+[MIT](https://github.com/becher/angular-device-information/blob/master/LICENSE)
+
+
+
+ 
