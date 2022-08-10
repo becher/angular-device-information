@@ -5,7 +5,7 @@
 
 ## Dependencies
 
-**Angular-device-information 1.0.6** is available for **Angular 8.x** to **Angular 14.x**  
+**Angular-device-information 1.0.7** is available for **Angular 8.x** to **Angular 14.x**  
 
 ## Installation
 
