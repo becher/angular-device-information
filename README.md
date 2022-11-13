@@ -2,7 +2,6 @@
   <h1 align="center">angular-device-information</h1>
 </a>
 
-NPM LINK : https://www.npmjs.com/package/angular-device-information
 ## Dependencies
 
 **Angular-device-information 1.0.8** is available for **Angular 8.x** to **Angular 14.x**  
@@ -14,7 +13,7 @@ To install this library, run:
 ```bash
 $ npm install angular-device-information --save
 ```
-
+NPM LINK : https://www.npmjs.com/package/angular-device-information
 **In your app.module.ts file add AngularDeviceInformationService as providers(Optional)**
 
 ```typescript
