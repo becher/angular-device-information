@@ -2,10 +2,10 @@
   <h1 align="center">angular-device-information</h1>
 </a>
 
-
+NPM LINK : https://www.npmjs.com/package/angular-device-information
 ## Dependencies
 
-**Angular-device-information 1.0.7** is available for **Angular 8.x** to **Angular 14.x**  
+**Angular-device-information 1.0.8** is available for **Angular 8.x** to **Angular 14.x**  
 
 ## Installation
 
