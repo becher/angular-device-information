@@ -14,6 +14,7 @@ To install this library, run:
 $ npm install angular-device-information --save
 ```
 NPM LINK : https://www.npmjs.com/package/angular-device-information
+
 **In your app.module.ts file add AngularDeviceInformationService as providers(Optional)**
 
 ```typescript
