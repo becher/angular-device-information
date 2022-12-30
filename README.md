@@ -1,5 +1,5 @@
 <meta name="google-site-verification" content="zApSXb8oh9SIBjqaVNlIs_IPT7sTwY4vwk59YS_CshE" />
-  <a href="https://www.npmjs.com/package/angular-device-information"><h1 align="center">angular-device-information</h1></a>
+  <h1 align="center">angular-device-information</h1>
 
 ## Dependencies
 
