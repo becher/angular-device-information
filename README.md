@@ -1,4 +1,4 @@
-<meta name="google-site-verification" content="zApSXb8oh9SIBjqaVNlIs_IPT7sTwY4vwk59YS_CshE" />
+<head> <meta name="google-site-verification" content="zApSXb8oh9SIBjqaVNlIs_IPT7sTwY4vwk59YS_CshE" /></head> 
   <h1 align="center">angular-device-information</h1>
 
 ## Dependencies
