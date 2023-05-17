@@ -12,7 +12,7 @@ To install this library, run:
 ```bash
 $ npm install angular-device-information --save
 ```
-NPM LINK : https://www.npmjs.com/package/angular-device-information
+NPM LINK : <a href="https://www.npmjs.com/package/angular-device-information" target="_blank">https://www.npmjs.com/package/angular-device-information</a>
 
 **In your app.module.ts file add AngularDeviceInformationService as providers(Optional)**
 
