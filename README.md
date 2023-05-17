@@ -5,7 +5,7 @@
 
 **Angular-device-information 1.0.8** is available for **Angular 8.x** to **Angular 14.x**  
 
-support us :
+support us : https://www.paypal.com/donate/?hosted_button_id=KB656S4WZPU8S
 
 <form action="https://www.paypal.com/donate" method="post" target="_top">
 <input type="hidden" name="hosted_button_id" value="KB656S4WZPU8S" />
