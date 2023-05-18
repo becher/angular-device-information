@@ -5,9 +5,9 @@
 
 | Angular       | Version       |
 | ------------- | ------------- |
-|  Angular 8    | v 1.0.0      |
-|  Angular 14   | v 2.0.0      |
-|  Angular 15   | v 3.0.3      |
+|  Angular 8+   | v 1.1.5      |
+|  Angular 14.x   | v 2.0.1      |
+|  Angular 15.x   | v 3.0.5      |
 
 ## Support us : <br> <a href="https://www.paypal.com/donate/?hosted_button_id=6NTWH6ZLKN4RC" target="_blank"><img alt="" border="0" src="https://pics.paypal.com/00/s/MGNhMjc1OWQtYmM4Ni00OWM3LTkyN2ItZTliMWI1ZTM0YWZi/file.PNG" width="200" /></a>
 
