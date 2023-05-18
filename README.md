@@ -5,17 +5,12 @@
 
 | Angular       | Version       |
 | ------------- | ------------- |
-|  Angular 8+    | v 1.1.5       |
-|  Angular 14   | v 2.0.1       |
-|  Angular 15   | v 3.0.5       |
+|  Angular 8+   | v 1.1.5      |
+|  Angular 14.x   | v 2.0.1      |
+|  Angular 15.x   | v 3.0.5      |
 
-support us : <a href="https://www.paypal.com/donate/?hosted_button_id=KB656S4WZPU8S">Paypal Or credit card </a>
+## Support us : <br> <a href="https://www.paypal.com/donate/?hosted_button_id=6NTWH6ZLKN4RC" target="_blank"><img alt="" border="0" src="https://pics.paypal.com/00/s/MGNhMjc1OWQtYmM4Ni00OWM3LTkyN2ItZTliMWI1ZTM0YWZi/file.PNG" width="200" /></a>
 
-<form action="https://www.paypal.com/donate" method="post" target="_top">
-<input type="hidden" name="hosted_button_id" value="KB656S4WZPU8S" />
-<input type="image" src="https://www.paypalobjects.com/en_US/FR/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
-<img alt="" border="0" src="https://www.paypal.com/en_FR/i/scr/pixel.gif" width="1" height="1" />
-</form>
 
 
 ## Installation
