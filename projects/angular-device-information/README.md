@@ -1,8 +1,15 @@
-<a href="#">
+<head> <meta name="google-site-verification" content="zApSXb8oh9SIBjqaVNlIs_IPT7sTwY4vwk59YS_CshE" /></head> 
   <h1 align="center">angular-device-information</h1>
-</a>
 
-support us  : 
+## Dependencies
+
+| Angular       | Version       |
+| ------------- | ------------- |
+|  Angular 8    | v 1.0.8       |
+|  Angular 14   | v 1.0.9       |
+|  Angular 15   | v 1.1.0       |
+
+support us : <a href="https://www.paypal.com/donate/?hosted_button_id=KB656S4WZPU8S">Paypal Or credit card </a>
 
 <form action="https://www.paypal.com/donate" method="post" target="_top">
 <input type="hidden" name="hosted_button_id" value="KB656S4WZPU8S" />
@@ -11,10 +18,6 @@ support us  :
 </form>
 
 
-## Dependencies
-
-**Angular-device-information 1.0.6** is available for **Angular 8.x** to **Angular 14.x**  
-
 ## Installation
 
 To install this library, run:
@@ -22,6 +25,7 @@ To install this library, run:
 ```bash
 $ npm install angular-device-information --save
 ```
+NPM LINK : <a href="https://www.npmjs.com/package/angular-device-information" target="_blank">https://www.npmjs.com/package/angular-device-information</a>
 
 **In your app.module.ts file add AngularDeviceInformationService as providers(Optional)**
 
