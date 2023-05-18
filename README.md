@@ -3,7 +3,11 @@
 
 ## Dependencies
 
-**Angular-device-information 1.0.8** is available for **Angular 8.x** to **Angular 14.x**  
+| Angular       | Version       |
+| ------------- | ------------- |
+|  Angular 8    | v 1.0.8       |
+|  Angular 14   | v 1.0.9       |
+|  Angular 15   | v 1.1.0       |
 
 support us : <a href="https://www.paypal.com/donate/?hosted_button_id=KB656S4WZPU8S">Paypal Or credit card </a>
 
