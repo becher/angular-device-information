@@ -5,7 +5,7 @@
 
 | Angular       | Version       |
 | ------------- | ------------- |
-|  Angular 8+   | v 1.1.4      |
+|  Angular 8+   | v 1.1.5     |
 |  Angular 14   | v 2.0.0      |
 |  Angular 15   | v 3.0.3      |
 
