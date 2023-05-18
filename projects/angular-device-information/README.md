@@ -1,19 +1,17 @@
-<a href="#">
+<head> <meta name="google-site-verification" content="zApSXb8oh9SIBjqaVNlIs_IPT7sTwY4vwk59YS_CshE" /></head> 
   <h1 align="center">angular-device-information</h1>
-</a>
-
-support us  : 
-
-<form action="https://www.paypal.com/donate" method="post" target="_top">
-<input type="hidden" name="hosted_button_id" value="KB656S4WZPU8S" />
-<input type="image" src="https://www.paypalobjects.com/en_US/FR/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
-<img alt="" border="0" src="https://www.paypal.com/en_FR/i/scr/pixel.gif" width="1" height="1" />
-</form>
-
 
 ## Dependencies
 
-**Angular-device-information 1.0.6** is available for **Angular 8.x** to **Angular 14.x**  
+| Angular       | Version       |
+| ------------- | ------------- |
+|  Angular 8+   | v 1.1.4      |
+|  Angular 14   | v 2.0.0      |
+|  Angular 15   | v 3.0.3      |
+
+## Support us : <br> <a href="https://www.paypal.com/donate/?hosted_button_id=6NTWH6ZLKN4RC" target="_blank"><img alt="" border="0" src="https://pics.paypal.com/00/s/MGNhMjc1OWQtYmM4Ni00OWM3LTkyN2ItZTliMWI1ZTM0YWZi/file.PNG" width="200" /></a>
+
+
 
 ## Installation
 
@@ -22,6 +20,7 @@ To install this library, run:
 ```bash
 $ npm install angular-device-information --save
 ```
+NPM LINK : <a href="https://www.npmjs.com/package/angular-device-information" target="_blank">https://www.npmjs.com/package/angular-device-information</a>
 
 **In your app.module.ts file add AngularDeviceInformationService as providers(Optional)**
 
