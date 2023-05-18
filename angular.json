@@ -42,6 +42,9 @@
           }
         }
       }
-    }},
-  "defaultProject": "angular-device-information"
+    }
+  },
+  "cli": {
+    "analytics": "31c88da7-4424-4404-aa9a-302bdb5b3540"
+  }
 }
