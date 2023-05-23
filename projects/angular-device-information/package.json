@@ -1,11 +1,24 @@
 {
   "name": "angular-device-information",
-  "version": "3.0.5",
+  "version": "3.0.6",
   "license": "MIT",
-  "peerDependencies": {
-    "@angular/common": "^15.2.9",
-    "@angular/core": "^15.2.9"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/becher/angular-device-information.git"
   },
+  "keywords": [
+    "angular","device","info","location","device-name","mobile",
+    "tablet","desktop","oriantation","hash","href","port","node","service","date","utc","date",
+    "day","month","online","offline","permissions","height","width","client","Width","client","Height",
+    "geolocation","notifications","push","midi","camera","microphone","speaker","device-info",
+    "background-fetch","background-sync","bluetooth","persistent-storage","ambient-light-sensor","accelerometer",
+    "gyroscope","magnetometer","clipboard","display-capture","nfc"
+  ],
+  "author": "Becher Henchiri",
+  "bugs": {
+    "url": "https://github.com/becher/angular-device-information/issues"
+  },
+  "homepage": "https://github.com/becher/angular-device-information#readme",
   "dependencies": {
     "tslib": "^2.0.0"
   }
