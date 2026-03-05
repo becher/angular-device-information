@@ -1,9 +1,27 @@
 {
-  "name": "angular-device-information",
-  "version": "2.0.0",
+    "name": "angular-device-information",
+  "version": "5.0.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/becher/angular-device-information.git"
+  },
+  "keywords": [
+    "angular","device","info","location","device-name","mobile",
+    "tablet","desktop","oriantation","hash","href","port","node","service","date","utc","date",
+    "day","month","online","offline","permissions","height","width","client","Width","client","Height",
+    "geolocation","notifications","push","midi","camera","microphone","speaker","device-info",
+    "background-fetch","background-sync","bluetooth","persistent-storage","ambient-light-sensor","accelerometer",
+    "gyroscope","magnetometer","clipboard","display-capture","nfc"
+  ],
+  "author": "Becher Henchiri",
+  "bugs": {
+    "url": "https://github.com/becher/angular-device-information/issues"
+  },
+  "homepage": "https://github.com/becher/angular-device-information#readme",
   "peerDependencies": {
-    "@angular/common": "^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0",
-    "@angular/core": "^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0"
+    "@angular/common": "^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^20.0.0 || ^21.0.0",
+    "@angular/core": "^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^20.0.0 || ^21.0.0"
   },
   "dependencies": {
     "tslib": "^2.0.0"

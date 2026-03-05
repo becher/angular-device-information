@@ -11,10 +11,6 @@
     "moduleResolution": "bundler",
     "importHelpers": true,
     "target": "ES2022",
-    "lib": [
-      "es2018",
-      "dom"
-    ],
     "paths": {
       "angular-device-information": [
         "dist/angular-device-information/angular-device-information",

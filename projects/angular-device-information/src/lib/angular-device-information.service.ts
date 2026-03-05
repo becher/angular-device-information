@@ -20,9 +20,7 @@ export interface DeviceInfo {
 })
 export class AngularDeviceInformationService {
   private userAgent = '';
-  private appVersion = '';
-  private appName = '';
-  private deviceInfo :DeviceInfo;
+  private deviceInfo: DeviceInfo;
 
   private filter: Filter;
 
@@ -30,34 +28,31 @@ export class AngularDeviceInformationService {
 
     if (isPlatformBrowser(this.platformId) && typeof window !== 'undefined') {
       this.userAgent = window.navigator.userAgent;
-      this.appVersion = window.navigator.appVersion;
-      this.appName = window.navigator.appName;
     }
     this.filter = new Filter();
-    this.setDeviceInfo(this.userAgent, this.appVersion, this.appName);
+    this.setDeviceInfo(this.userAgent);
   }
 
   /**
    * @desc Sets the initial value of the device when the service is initiated.
    * This value is later accessible for usage
    */
-  private setDeviceInfo(userAgent, appVersion, appName): void {
-    let unknown = '-';
+  private setDeviceInfo(userAgent: string): void {
+    const unknown = '-';
 
-    // screen
+    // screen (SSR-safe: guard against missing screen object)
     let screenSize = '';
-    if (screen.width) {
-      let width = (screen.width) ? screen.width : '';
-      let height = (screen.height) ? screen.height : '';
+    if (typeof screen !== 'undefined' && screen.width) {
+      const width = screen.width ? screen.width : '';
+      const height = screen.height ? screen.height : '';
       screenSize += '' + width + ' x ' + height;
     }
 
-    // browser
-    let nVer = appVersion;
-    let nAgt = userAgent;
-    let browser = appName;
-    let version = '' + parseFloat(navigator.appVersion);
-    let majorVersion = parseInt(navigator.appVersion, 10);
+    // browser — derived entirely from userAgent (no deprecated APIs)
+    const nAgt = userAgent;
+    let browser = unknown;
+    let version = unknown;
+    let majorVersion = 0;
     let nameOffset, verOffset, ix;
 
     // Opera
@@ -116,7 +111,7 @@ export class AngularDeviceInformationService {
       browser = nAgt.substring(nameOffset, verOffset);
       version = nAgt.substring(verOffset + 1);
       if (browser.toLowerCase() == browser.toUpperCase()) {
-        browser = navigator.appName;
+        browser = 'Other';
       }
     }
     // trim the version string
@@ -130,8 +125,8 @@ export class AngularDeviceInformationService {
       version = version.substring(0, ix);
     }
 
-     browser = (function() {
-      var test = function(regexp) {return regexp.test(window.navigator.userAgent)}
+     browser = (function(ua: string) {
+      var test = function(regexp: RegExp) {return regexp.test(ua)}
       switch (true) {
           case test(/edg/i): return "Microsoft Edge";
           case test(/trident/i): return "Microsoft Internet Explorer";
@@ -157,20 +152,24 @@ export class AngularDeviceInformationService {
           case test(/safari/i): return "Safari";
           default: return "Other";
       }
-  })();
+  })(nAgt);
 
     majorVersion = parseInt('' + version, 10);
     if (isNaN(majorVersion)) {
-      version = '' + parseFloat(navigator.appVersion);
-      majorVersion = parseInt(navigator.appVersion, 10);
+      // Fallback: extract first version-like number from userAgent (no deprecated APIs)
+      const vMatch = nAgt.match(/(?:Version|rv:|Chrome|Firefox|Safari|Edge|OPR|Edg)[\/ ]([\d.]+)/i);
+      version = vMatch ? vMatch[1] : '0';
+      majorVersion = parseInt(version, 10) || 0;
     }
 
-    // cookie
-    let cookieEnabled = (navigator.cookieEnabled) ? true : false;
-
-    if (typeof navigator.cookieEnabled == 'undefined' && !cookieEnabled) {
-      document.cookie = 'testcookie';
-      cookieEnabled = (document.cookie.indexOf('testcookie') != -1) ? true : false;
+    // cookie (SSR-safe: guard against missing navigator/document)
+    let cookieEnabled = false;
+    if (typeof navigator !== 'undefined') {
+      cookieEnabled = !!navigator.cookieEnabled;
+      if (typeof navigator.cookieEnabled === 'undefined' && !cookieEnabled && typeof document !== 'undefined') {
+        document.cookie = 'testcookie';
+        cookieEnabled = document.cookie.indexOf('testcookie') !== -1;
+      }
     }
 
     // system
