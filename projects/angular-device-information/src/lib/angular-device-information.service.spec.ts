@@ -63,6 +63,22 @@ const UA = {
 
   // Empty / SSR
   EMPTY: '',
+
+  // 2025-2026 future devices (should be caught by dynamic regex patterns)
+  SAMSUNG_S25_ULTRA: 'Mozilla/5.0 (Linux; Android 15; SM-S938B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
+  SAMSUNG_Z_FOLD6: 'Mozilla/5.0 (Linux; Android 15; SM-F956B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
+  SAMSUNG_A56: 'Mozilla/5.0 (Linux; Android 15; SM-A566B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
+  PIXEL_10_PRO: 'Mozilla/5.0 (Linux; Android 16; Pixel 10 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Mobile Safari/537.36',
+  PIXEL_11: 'Mozilla/5.0 (Linux; Android 17; Pixel 11) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36',
+  IPHONE_16_PRO: 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1',
+  XIAOMI_15: 'Mozilla/5.0 (Linux; Android 15; 2501116TG) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
+  ONEPLUS_13: 'Mozilla/5.0 (Linux; Android 15; CPH2653) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
+  OPPO_FIND_X8: 'Mozilla/5.0 (Linux; Android 15; CPH2651) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
+  REALME_GT6: 'Mozilla/5.0 (Linux; Android 15; RMX3800) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
+  HONOR_MAGIC7: 'Mozilla/5.0 (Linux; Android 15; FRI-AN00) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
+  GALAXY_TAB_S10: 'Mozilla/5.0 (Linux; Android 15; SM-X820) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+  GALAXY_TAB_A10: 'Mozilla/5.0 (Linux; Android 15; SM-T527) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+  LENOVO_TAB_P12: 'Mozilla/5.0 (Linux; Android 14; TB-Y700F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
 };
 
 describe('AngularDeviceInformationService', () => {
@@ -693,6 +709,90 @@ describe('AngularDeviceInformationService', () => {
     it('TABLETS_RE should match common tablets', () => {
       expect(TABLETS_RE.iPad.test('iPad Pro')).toBe(true);
       expect(TABLETS_RE.SamsungTablet.test('SAMSUNG Galaxy Tab')).toBe(true);
+    });
+  });
+
+  // =======================================================================
+  // 8. FUTURE-PROOF 2025-2026 DEVICE DETECTION
+  // =======================================================================
+  describe('2025-2026 future device detection (dynamic regex)', () => {
+    // --- Phones ---
+    const futurePhones: [string, string][] = [
+      ['Samsung S25 Ultra',  UA.SAMSUNG_S25_ULTRA],
+      ['Samsung Z Fold6',    UA.SAMSUNG_Z_FOLD6],
+      ['Samsung A56',        UA.SAMSUNG_A56],
+      ['Pixel 10 Pro',       UA.PIXEL_10_PRO],
+      ['Pixel 11',           UA.PIXEL_11],
+      ['iPhone 16 Pro',      UA.IPHONE_16_PRO],
+      ['Xiaomi 15',          UA.XIAOMI_15],
+      ['OnePlus 13',         UA.ONEPLUS_13],
+      ['OPPO Find X8',       UA.OPPO_FIND_X8],
+      ['Realme GT6',         UA.REALME_GT6],
+      ['Honor Magic7',       UA.HONOR_MAGIC7],
+    ];
+
+    futurePhones.forEach(([label, ua]) => {
+      it(`should detect ${label} as mobile`, () => {
+        expect(service.isMobile(ua)).toBe(true);
+      });
+
+      it(`${label} should NOT be tablet`, () => {
+        expect(service.isTablet(ua)).toBe(false);
+      });
+
+      it(`${label} should NOT be desktop`, () => {
+        expect(service.isDesktop(ua)).toBe(false);
+      });
+    });
+
+    // --- Tablets ---
+    const futureTablets: [string, string][] = [
+      ['Galaxy Tab S10',     UA.GALAXY_TAB_S10],
+      ['Galaxy Tab A10',     UA.GALAXY_TAB_A10],
+      ['Lenovo Tab P12',     UA.LENOVO_TAB_P12],
+    ];
+
+    futureTablets.forEach(([label, ua]) => {
+      it(`should detect ${label} as tablet`, () => {
+        expect(service.isTablet(ua)).toBe(true);
+      });
+
+      it(`${label} should NOT be mobile`, () => {
+        expect(service.isMobile(ua)).toBe(false);
+      });
+    });
+
+    // --- Dynamic regex pattern verification ---
+    it('SAMSUNG dynamic pattern should catch SM-S (S25+)', () => {
+      expect(MOBILES_RE.SAMSUNG.test('SM-S938B')).toBe(true);
+    });
+
+    it('SAMSUNG dynamic pattern should catch SM-F (Z Fold/Flip)', () => {
+      expect(MOBILES_RE.SAMSUNG.test('SM-F956B')).toBe(true);
+    });
+
+    it('SAMSUNG dynamic pattern should catch Galaxy S26 (future)', () => {
+      expect(MOBILES_RE.SAMSUNG.test('Galaxy S26')).toBe(true);
+    });
+
+    it('SAMSUNG dynamic pattern should catch Galaxy Z Fold7 (future)', () => {
+      expect(MOBILES_RE.SAMSUNG.test('Galaxy Z Fold7')).toBe(true);
+    });
+
+    it('GOOGLE_PIXEL dynamic pattern should catch Pixel 12 (future)', () => {
+      expect(MOBILES_RE.GOOGLE_PIXEL.test('Pixel 12')).toBe(true);
+    });
+
+    it('GOOGLE_PIXEL dynamic pattern should catch Pixel 10 Pro (future)', () => {
+      expect(MOBILES_RE.GOOGLE_PIXEL.test('Pixel 10 Pro')).toBe(true);
+    });
+
+    it('SamsungTablet dynamic pattern should catch SM-X820 (Tab S10)', () => {
+      expect(TABLETS_RE.SamsungTablet.test('SM-X820')).toBe(true);
+    });
+
+    it('SamsungTablet dynamic pattern should NOT catch SM-S938B (phone)', () => {
+      expect(TABLETS_RE.SamsungTablet.test('SM-S938B')).toBe(false);
     });
   });
   

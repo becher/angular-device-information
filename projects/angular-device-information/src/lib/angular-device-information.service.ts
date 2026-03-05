@@ -343,9 +343,8 @@ export class AngularDeviceInformationService {
 }
 
 export const MOBILES_RE = {
-  // tslint:disable-next-line:max-line-length
-  // Google Pixel phones (2016-2026)
-  GOOGLE_PIXEL: /Pixel [2-9]a?( XL)?|Pixel Pro|Pixel [0-9]+ Pro|Pixel Fold|Pixel 6|Pixel 6 Pro|Pixel 6a|Pixel 7|Pixel 7 Pro|Pixel 7a|Pixel 8|Pixel 8 Pro|Pixel 8a|Pixel 9|Pixel 9 Pro|Pixel 9 Pro XL|Pixel 9 Pro Fold/,
+  // Google Pixel phones — dynamic pattern catches all future models (Pixel 10, 11, …)
+  GOOGLE_PIXEL: /Pixel \d+[a]?(?:\s+(?:Pro|XL|Fold))*|Pixel (?:Pro|Fold)/,
   HTC: /HTC|HTC.*(Sensation|Evo|Vision|Explorer|6800|8100|8900|A7272|S510e|C110e|Legend|Desire|T8282)|APX515CKT|Qtek9090|APA9292KT|HD_mini|Sensation.*Z710e|PG86100|Z715e|Desire.*(A8181|HD)|ADR6200|ADR6400L|ADR6425|001HT|Inspire 4G|Android.*\bEVO\b|T-Mobile G1|Z520m|Android [0-9.]+; Pixel/,
   NEXUS_PHONE: /Nexus One|Nexus S|Galaxy.*Nexus|Android.*Nexus.*Mobile|Nexus 4|Nexus 5|Nexus 6/,
   DELL: /Dell[;]? (Streak|Aero|Venue|Venue Pro|Flash|Smoke|Mini 3iX)|XCD28|XCD35|\b001DL\b|\b101DL\b|\bGS01\b/,
@@ -357,8 +356,9 @@ export const MOBILES_RE = {
       WX445|XT300|XT301|XT311|XT316|XT317|XT319|XT320|XT390|XT502|XT530|XT531|XT532|XT535|XT603|XT610|XT611|
       XT615|XT681|XT701|XT702|XT711|XT720|XT800|XT806|XT860|XT862|XT875|XT882|XT883|XT894|XT901|XT907|XT909|
       XT910|XT912|XT928|XT926|XT915|XT919|XT925|XT1021|\\bMoto E\\b|XT1068|XT1092|XT1052|
-      moto g|moto e|moto z|motorola edge|motorola razr|XT2[0-9]{3}|XT21[0-9]{2}|XT22[0-9]{2}|XT23[0-9]{2}`),
-  SAMSUNG: new RegExp(`\\bSamsung\\b|SM-G950F|SM-G955F|SM-G9250|GT-19300|SGH-I337|BGT-S5230|GT-B2100|GT-B2700|GT-B2710|
+      moto g|moto e|moto z|motorola edge|motorola razr|XT\\d{4}`),  // XT\d{4} catches all future Motorola models
+  // Samsung — dynamic SM-[SGNAFJCEM] catches all future Galaxy S/A/Note/Z/M phone models
+  SAMSUNG: new RegExp(`\\bSamsung\\b|SM-[SGNAFJCEM]\\d{3,4}[A-Z]?\\d?|Galaxy (?:Z (?:Fold|Flip)\\d*|S\\d+|Note\\s?\\d+|A\\d+|M\\d+|F\\d+)|SM-G950F|SM-G955F|SM-G9250|GT-19300|SGH-I337|BGT-S5230|GT-B2100|GT-B2700|GT-B2710|
       GT-B3210|GT-B3310|GT-B3410|GT-B3730|GT-B3740|GT-B5510|GT-B5512|GT-B5722|GT-B6520|GT-B7300|GT-B7320|
       GT-B7330|GT-B7350|GT-B7510|GT-B7722|GT-B7800|GT-C3010|GT-C3011|GT-C3060|GT-C3200|GT-C3212|GT-C3212I|
       GT-C3262|GT-C3222|GT-C3300|GT-C3300K|GT-C3303|GT-C3303K|GT-C3310|GT-C3322|GT-C3330|GT-C3350|GT-C3500|
@@ -451,33 +451,24 @@ export const MOBILES_RE = {
   iPod: /\biPod\b/,
   ANDROID: /\bAndroid\b/,
   WINDOWS_PHONE: /\bWindows-Phone\b/,
-  // OnePlus phones (2014-2026)
-  ONEPLUS: /OnePlus|ONEPLUS|ONE A200[0-9]|ONE E100[0-9]|IN201[0-9]|IN202[0-9]|LE211[0-9]|CPH2[0-9]{3}|NE2[0-9]{3}|PHB110|GM1[0-9]{3}|HD1[0-9]{3}|KB2[0-9]{3}|LE2[0-9]{3}|DN2[0-9]{3}|NE2[0-9]{3}|CPH2[0-9]{3}/,
-  // Xiaomi phones (Mi, Redmi, POCO, Black Shark)
-  XIAOMI: new RegExp(`Xiaomi|MI [0-9A-Z]+|Redmi|POCO|Black Shark|Mi 9|Mi 10|Mi 11|Mi 12|Mi 13|Mi 14|
-      Mi Note [0-9]+|Redmi Note [0-9]+|Redmi [0-9]+|POCO [A-Z][0-9]+|POCO X[0-9]+|POCO M[0-9]+|POCO F[0-9]+|
-      Redmi K[0-9]+|Mi MIX [0-9]+|Mi CC[0-9]+|2[0-9]{6}[A-Z]{2,3}|M2[0-9]{3}[A-Z][0-9][A-Z]{1,2}|
-      22[0-9]{5}[A-Z]{2,3}|23[0-9]{5}[A-Z]{2,3}|24[0-9]{5}[A-Z]{2,3}|25[0-9]{5}[A-Z]{2,3}|26[0-9]{5}[A-Z]{2,3}`),
-  // OPPO phones (including Find, Reno series)
-  OPPO: new RegExp(`OPPO|CPH[0-9]{4}|PCEM00|PCAM00|PCLM10|PDBM00|PDYM20|PDSM00|PDHM00|PFGM00|
-      Find X[0-9]?|Reno[0-9]*|OPPO A[0-9]+|OPPO F[0-9]+|OPPO K[0-9]+|ColorOS`),
-  // Vivo phones (including X, V, Y, iQOO series)
-  VIVO: new RegExp(`vivo|V[0-9]{4}[A-Z]?|Y[0-9]{2}[A-Z]?|iQOO|X[0-9]{2}[A-Z]?|NEX|
-      vivo X[0-9]+|vivo V[0-9]+|vivo Y[0-9]+|vivo S[0-9]+|vivo T[0-9]+|I[0-9]{4}`),
-  // Realme phones
-  REALME: new RegExp(`realme|RMX[0-9]{4}|Realme [0-9]+|Realme GT|Realme C[0-9]+|Realme Narzo|
-      Realme X[0-9]*|Realme Q[0-9]*`),
+  // OnePlus phones — dynamic CPH/IN/KB/LE/DN/NE patterns catch future models
+  ONEPLUS: /OnePlus|ONEPLUS|ONE [A-E]\d{4}|IN20\d{2}|IN21\d{2}|LE211[0-9]|CPH2[0-9]{3}|NE2[0-9]{3}|PHB110|GM1[0-9]{3}|HD1[0-9]{3}|KB2[0-9]{3}|LE2[0-9]{3}|DN2[0-9]{3}/,
+  // Xiaomi phones — dynamic year-based model codes (2[2-9]xxxxxxx) catch 2022-2029 models
+  XIAOMI: new RegExp(`Xiaomi|MI [0-9A-Z]+|Redmi|POCO|Black Shark|Mi \\d+|Mi Note \\d+|Mi MIX \\d+|Mi CC\\d+|
+      Redmi Note \\d+|Redmi \\d+[A-Z]?|Redmi K\\d+|POCO [A-Z]\\d+|
+      2[2-9]\\d{5}[A-Z]{2,3}|M2\\d{3}[A-Z]\\d[A-Z]{1,2}`),
+  // OPPO phones — CPH\d{4} catches all future OPPO/OnePlus models, P[A-Z]{2}M\d{2} catches internal codes
+  OPPO: new RegExp(`OPPO|CPH\\d{4}|P[A-Z]{2}M\\d{2}|Find X\\d*|Reno\\d*|OPPO [A-Z]\\d+|ColorOS`),
+  // Vivo phones — V\d{4} / I\d{4} model codes catch all future vivo devices
+  VIVO: new RegExp(`vivo|V\\d{4}[A-Z]?|iQOO|NEX|vivo [XVYST]\\d+|I\\d{4}`),
+  // Realme phones — RMX\d{4} catches all future Realme models
+  REALME: /realme|RMX\d{4}|Realme (?:\d+|GT|C\d+|Narzo|X\d*|Q\d*)/i,
   // Nothing Phone
   NOTHING: /Nothing Phone|A063/,
-  // Honor phones (post-Huawei separation)
-  HONOR: new RegExp(`HONOR|Honor|ANY-[A-Z]{2}[0-9]+|DUA-[A-Z]{2}[0-9]+|FNE-[A-Z]{2}[0-9]+|
-      Magic[0-9]+|Honor [0-9]+|Honor X[0-9]+|Honor Play|REA-[A-Z]{2}[0-9]+|CRT-[A-Z]{2}[0-9]+`),
-  // Huawei phones (P, Mate, Nova series)
-  HUAWEI: new RegExp(`Huawei|HUAWEI|ALP-[A-Z]{2}[0-9]+|ANA-[A-Z]{2}[0-9]+|ANE-[A-Z]{2}[0-9]+|
-      BAH[0-9]-[A-Z][0-9]+|BLA-[A-Z]{2}[0-9]+|CLT-[A-Z]{2}[0-9]+|ELE-[A-Z]{2}[0-9]+|EML-[A-Z]{2}[0-9]+|
-      EVR-[A-Z]{2}[0-9]+|HMA-[A-Z]{2}[0-9]+|JNY-[A-Z]{2}[0-9]+|LYA-[A-Z]{2}[0-9]+|MAR-[A-Z]{2}[0-9]+|
-      NOH-[A-Z]{2}[0-9]+|OCE-[A-Z]{2}[0-9]+|P[0-9]+ Pro|P[0-9]+ Lite|P[0-9]+|Mate [0-9]+|Nova [0-9]+|
-      Y[0-9]+ [0-9]{4}|HarmonyOS`),
+  // Honor phones — [A-Z]{3}-[A-Z]{2}\d+ catches all Honor internal model codes
+  HONOR: /HONOR|Honor|[A-Z]{3}-[A-Z]{2}\d+|Magic\d+|Honor (?:\d+|X\d+|Play)/i,
+  // Huawei phones — [A-Z]{3}-[A-Z]{2}\d+ catches all Huawei internal model codes (NOH, ALP, CLT, etc.)
+  HUAWEI: /Huawei|HUAWEI|[A-Z]{3}-[A-Z]{2}\d+|P\d+ (?:Pro|Lite)|Mate \d+|Nova \d+|HarmonyOS/i,
   // Asus ROG Phone & Zenfone
   ASUS_PHONE: /ROG Phone|ASUS_I00[0-9][A-Z]?|ASUS_AI2[0-9]{3}|ZenFone|ASUS_Z[0-9]{3}[A-Z]{2}/,
   // Google/Android One devices
@@ -490,8 +481,8 @@ export const MOBILES_RE = {
   MEIZU: /Meizu|MX[0-9]|M[0-9]+ Note|PRO [0-9]/,
   // Fairphone (sustainable phones)
   FAIRPHONE: /Fairphone|FP[0-9]/,
-  // Sony Xperia modern
-  SONY_XPERIA: /Xperia [0-9]+|XQ-[A-Z]{2}[0-9]+|SO-[0-9]{2}[A-Z]/,
+  // Sony Xperia — XQ-xx\d+ catches all modern Xperia models
+  SONY_XPERIA: /Xperia \d+|XQ-[A-Z]{2}\d+|SO-\d{2}[A-Z]/,
   // Gaming phones
   GAMING_PHONES: /Black Shark|Red Magic|ROG Phone|Legion Phone|REDMAGIC/,
   GENERIC_PHONE: new RegExp(`Tapatalk|PDA;|SAGEM|\\bmmp\\b|pocket|\\bpsp\\b|symbian|Smartphone|smartfon|treo|up.browser|
@@ -504,8 +495,8 @@ export const TABLETS_RE = {
   NexusTablet: /Android.*Nexus[\s]+(7|9|10)/,
   // Google Pixel Tablet
   GoogleTablet: /Android.*Pixel C|Pixel Tablet/,
-  // Samsung Galaxy Tab (including Tab S7, S8, S9, A series, FE series)
-  SamsungTablet: new RegExp(`SAMSUNG.*Tablet|Galaxy.*Tab|SC-01C|GT-P1000|GT-P1003|GT-P1010|GT-P3105|GT-P6210|
+  // Samsung Galaxy Tab — SM-[TXP]\d{3,4} catches all future Tab S/A/FE models
+  SamsungTablet: new RegExp(`SAMSUNG.*Tablet|Galaxy.*Tab|SM-[TXP]\\d{3,4}[A-Z]?\\d?|SC-01C|GT-P1000|GT-P1003|GT-P1010|GT-P3105|GT-P6210|
         GT-P6800|GT-P6810|GT-P7100|GT-P7300|GT-P7310|GT-P7500|GT-P7510|SCH-I800|SCH-I815|SCH-I905|
         SGH-I957|SGH-I987|SGH-T849|SGH-T859|SGH-T869|SPH-P100|GT-P3100|GT-P3108|GT-P3110|GT-P5100|
         GT-P5110|GT-P6200|GT-P7320|GT-P7511|GT-N8000|GT-P8510|SGH-I497|SPH-P500|SGH-T779|SCH-I705|
@@ -554,8 +545,8 @@ export const TABLETS_RE = {
         PMP5597D|PMP5597|PMP7100D|PER3464|PER3274|PER3574|PER3884|PER5274|PER5474|PMP5097CPRO|PMP5097|PMP7380D|
         PMP5297C|PMP5297C_QUAD|PMP812E|PMP812E3G|PMP812F|PMP810E|PMP880TD|PMT3017|PMT3037|PMT3047|PMT3057|PMT7008|
         PMT5887|PMT5001|PMT5002`),
-  // Lenovo tablets (Tab P11, P12, M10, Yoga Tab, Legion Tab)
-  LenovoTablet: new RegExp(`Lenovo TAB|Idea(Tab|Pad)( A1|A10| K1|)|ThinkPad([ ]+)?Tablet|YT3-850M|YT3-X90L|YT3-X90F|
+  // Lenovo tablets — TB-[A-Z]\d{3,4} catches all future Lenovo Tab models
+  LenovoTablet: new RegExp(`Lenovo TAB|TB-[A-Z]\\d{3,4}[A-Z]?|Idea(Tab|Pad)( A1|A10| K1|)|ThinkPad([ ]+)?Tablet|YT3-850M|YT3-X90L|YT3-X90F|
         YT3-X90X|Lenovo.*(S2109|S2110|S5000|S6000|K3011|A3000|A3500|A1000|A2107|A2109|A1107|A5500|A7600|B6000|
         B8000|B8080)(-|)(FL|F|HV|H|)|TB-X606F|TB-X103F|TB-X304F|TB-X304L|TB-X704F|TB-8703F|Tab2A7-10F|TB2-X30L|TB-8504F|
         TB-J606F|TB-J606L|TB-J616F|TB-J706F|TB-J706L|TB-X605F|TB-X605L|TB-X505F|TB-X505L|TB-X306F|TB-X306X|
@@ -732,8 +723,9 @@ export const TABLETS_RE = {
         FREEDOM|CHICAGO|CLEVELAND|BALTIMORE-GH|IOWA|BOSTON|SEATTLE|PHOENIX|DALLAS|IN 101|MasterChef)\\b`),
   MediacomTablet: 'M-MPI10C3G|M-SP10EG|M-SP10EGP|M-SP10HXAH|M-SP7HXAH|M-SP10HXBH|M-SP8HXAH|M-SP8MXA',
   MiTablet: /\bMI PAD\b|\bHM NOTE 1W\b/,
-  // Xiaomi Pad series (Pad 5, Pad 6, Redmi Pad)
+  // Xiaomi Pad — dynamic year codes (2[1-9]\d{5}\w+) catch future Xiaomi/Redmi/POCO pads
   XiaomiTablet: new RegExp(`Xiaomi Pad|Mi Pad|Redmi Pad|POCO Pad|
+        2[1-9]\\d{5}(?:RP|G|AC|SC)\\w*|
         21051182G|22081281AC|22081283C|23043RP34G|23073RPBFC|23073RPBFL|
         2109119DG|2206123SC|23046RP50C|23046RP50G|24053RP02A`),
   // OnePlus Pad
