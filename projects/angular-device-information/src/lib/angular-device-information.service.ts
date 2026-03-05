@@ -31,6 +31,11 @@ export class AngularDeviceInformationService {
     }
     this.filter = new Filter();
     this.deviceInfo = this.buildDeviceInfo(this.userAgent);
+
+    // Attempt Windows 11 detection via Client Hints (fire-and-forget)
+    if (this.deviceInfo.os === 'Windows' && isPlatformBrowser(this.platformId)) {
+      this.refineWindowsVersion(this.deviceInfo);
+    }
   }
 
   /**
@@ -278,6 +283,43 @@ export class AngularDeviceInformationService {
       return this.buildDeviceInfo(userAgent);
     }
     return this.deviceInfo;
+  }
+
+  /**
+   * @desc Returns a Promise that resolves with precise device info.
+   * On Windows, this waits for the Client Hints API to distinguish
+   * Windows 10 from Windows 11 (classic UA string shows "Windows NT 10.0" for both).
+   * On other platforms, resolves immediately.
+   * @returns a Promise resolving to the device information object.
+   */
+  public async getPreciseDeviceInfo(): Promise<DeviceInfo> {
+    if (this.deviceInfo.os === 'Windows' && isPlatformBrowser(this.platformId)) {
+      await this.refineWindowsVersion(this.deviceInfo);
+    }
+    return this.deviceInfo;
+  }
+
+  /**
+   * @desc Uses the User-Agent Client Hints API (navigator.userAgentData) to
+   * distinguish Windows 11 from Windows 10. The classic UA string shows
+   * "Windows NT 10.0" for both, so the only accurate browser-side method
+   * is to check platformVersion via getHighEntropyValues().
+   * A platformVersion major >= 13 indicates Windows 11.
+   * @param info the DeviceInfo object to mutate in-place
+   */
+  private async refineWindowsVersion(info: DeviceInfo): Promise<void> {
+    try {
+      const nav = navigator as any;
+      if (nav.userAgentData && typeof nav.userAgentData.getHighEntropyValues === 'function') {
+        const hints = await nav.userAgentData.getHighEntropyValues(['platformVersion']);
+        const major = parseInt(hints.platformVersion?.split('.')[0], 10);
+        if (!isNaN(major) && major >= 13) {
+          info.os = 'Windows 11';
+        }
+      }
+    } catch (_) {
+      // Client Hints not available or permission denied — keep regex-based detection
+    }
   }
 
   /**

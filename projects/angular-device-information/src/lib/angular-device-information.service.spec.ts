@@ -795,5 +795,89 @@ describe('AngularDeviceInformationService', () => {
       expect(TABLETS_RE.SamsungTablet.test('SM-S938B')).toBe(false);
     });
   });
+
+  // =======================================================================
+  // 9. WINDOWS 11 DETECTION VIA CLIENT HINTS
+  // =======================================================================
+  describe('Windows 11 detection (Client Hints)', () => {
+    let originalDescriptor: PropertyDescriptor | undefined;
+
+    beforeEach(() => {
+      originalDescriptor = Object.getOwnPropertyDescriptor(navigator, 'userAgentData');
+    });
+
+    afterEach(() => {
+      if (originalDescriptor) {
+        Object.defineProperty(navigator, 'userAgentData', originalDescriptor);
+      } else {
+        // Remove mock — restore to native getter
+        try { delete (navigator as any).userAgentData; } catch (_) {}
+        // If delete doesn't work (non-configurable), overwrite with undefined
+        try {
+          Object.defineProperty(navigator, 'userAgentData', {
+            value: undefined, configurable: true, writable: true
+          });
+        } catch (_) {}
+      }
+    });
+
+    it('should detect Windows 11 when platformVersion >= 13', async () => {
+      Object.defineProperty(navigator, 'userAgentData', {
+        value: {
+          getHighEntropyValues: () => Promise.resolve({ platformVersion: '13.0.0' })
+        },
+        configurable: true
+      });
+
+      const testInfo = { os: 'Windows' } as any;
+      await (service as any).refineWindowsVersion(testInfo);
+      expect(testInfo.os).toBe('Windows 11');
+    });
+
+    it('should keep Windows when platformVersion < 13', async () => {
+      Object.defineProperty(navigator, 'userAgentData', {
+        value: {
+          getHighEntropyValues: () => Promise.resolve({ platformVersion: '10.0.0' })
+        },
+        configurable: true
+      });
+
+      const testInfo = { os: 'Windows' } as any;
+      await (service as any).refineWindowsVersion(testInfo);
+      expect(testInfo.os).toBe('Windows');
+    });
+
+    it('should not crash when Client Hints API is absent', async () => {
+      Object.defineProperty(navigator, 'userAgentData', {
+        value: undefined,
+        configurable: true
+      });
+
+      const testInfo = { os: 'Windows' } as any;
+      await (service as any).refineWindowsVersion(testInfo);
+      expect(testInfo.os).toBe('Windows');
+    });
+
+    it('should not crash when getHighEntropyValues rejects', async () => {
+      Object.defineProperty(navigator, 'userAgentData', {
+        value: {
+          getHighEntropyValues: () => Promise.reject(new Error('denied'))
+        },
+        configurable: true
+      });
+
+      const testInfo = { os: 'Windows' } as any;
+      await (service as any).refineWindowsVersion(testInfo);
+      expect(testInfo.os).toBe('Windows');
+    });
+
+    it('getPreciseDeviceInfo should return a Promise<DeviceInfo>', async () => {
+      const info = await service.getPreciseDeviceInfo();
+      expect(info).toBeTruthy();
+      expect(info.userAgent).toBeDefined();
+      expect(info.browser).toBeDefined();
+      expect(info.os).toBeDefined();
+    });
+  });
   
 });
