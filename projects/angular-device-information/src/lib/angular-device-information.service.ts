@@ -137,8 +137,22 @@ export class AngularDeviceInformationService {
           case test(/trident/i): return "Microsoft Internet Explorer";
           case test(/firefox|fxios/i): return "Firefox";
           case test(/opr\//i): return "Opera";
+          case test(/brave/i): return "Brave";
+          case test(/vivaldi/i): return "Vivaldi";
+          case test(/yabrowser/i): return "Yandex Browser";
+          case test(/duckduckgo/i): return "DuckDuckGo";
+          case test(/whale/i): return "Naver Whale";
+          case test(/puffin/i): return "Puffin";
+          case test(/sleipnir/i): return "Sleipnir";
+          case test(/maxthon/i): return "Maxthon";
           case test(/ucbrowser/i): return "UC Browser";
           case test(/samsungbrowser/i): return "Samsung Browser";
+          case test(/miuibrowser/i): return "MIUI Browser";
+          case test(/huaweibrowser/i): return "Huawei Browser";
+          case test(/oppobrowser/i): return "OPPO Browser";
+          case test(/vivobrowser/i): return "Vivo Browser";
+          case test(/heytapbrowser/i): return "HeyTap Browser";
+          case test(/arc/i): return "Arc";
           case test(/chrome|chromium|crios/i): return "Chrome";
           case test(/safari/i): return "Safari";
           default: return "Other";
@@ -162,6 +176,7 @@ export class AngularDeviceInformationService {
     // system
     let os = 'unknown';
     let clientStrings = [
+      {s: 'Windows 11', r: /(Windows NT 10.0.*Build\/2[2-9]|Windows NT 10.0.*Build\/[3-9])/},
       {s: 'Windows 10', r: /(Windows 10.0|Windows NT 10.0)/},
       {s: 'Windows 8.1', r: /(Windows 8.1|Windows NT 6.3)/},
       {s: 'Windows 8', r: /(Windows 8|Windows NT 6.2)/},
@@ -176,21 +191,33 @@ export class AngularDeviceInformationService {
       {s: 'Windows NT 4.0', r: /(Windows NT 4.0|WinNT4.0|WinNT|Windows NT)/},
       {s: 'Windows CE', r: /Windows CE/},
       {s: 'Windows 3.11', r: /Win16/},
+      {s: 'HarmonyOS', r: /HarmonyOS/},
       {s: 'Android', r: /Android/},
       {s: 'Open BSD', r: /OpenBSD/},
       {s: 'Sun OS', r: /SunOS/},
       {s: 'Chrome OS', r: /CrOS/},
+      {s: 'Fuchsia', r: /Fuchsia/},
       {s: 'Linux', r: /(Linux|X11(?!.*CrOS))/},
       {s: 'iOS', r: /(iPhone|iPad|iPod)/},
+      {s: 'iPadOS', r: /(iPad.*OS|Macintosh.*Safari.*Mobile)/},
+      {s: 'macOS Sequoia', r: /Mac OS X 15/},
+      {s: 'macOS Sonoma', r: /Mac OS X 14/},
+      {s: 'macOS Ventura', r: /Mac OS X 13/},
+      {s: 'macOS Monterey', r: /Mac OS X 12/},
+      {s: 'macOS Big Sur', r: /Mac OS X 11/},
       {s: 'Mac OS X', r: /Mac OS X/},
       {s: 'Mac OS', r: /(Mac OS|MacPPC|MacIntel|Mac_PowerPC|Macintosh)/},
+      {s: 'watchOS', r: /Watch.*OS/},
+      {s: 'tvOS', r: /AppleTV/},
       {s: 'QNX', r: /QNX/},
       {s: 'UNIX', r: /UNIX/},
       {s: 'BeOS', r: /BeOS/},
       {s: 'OS/2', r: /OS\/2/},
       {s: 'BlackBerry', r: /BlackBerry/},
       {s: 'PlayBook', r: /PlayBook/},
-      {s: 'Search Bot', r: /(nuhk|Googlebot|Yammybot|Openbot|Slurp|MSNBot|Ask Jeeves\/Teoma|ia_archiver)/}
+      {s: 'Tizen', r: /Tizen/},
+      {s: 'KaiOS', r: /KAIOS/},
+      {s: 'Search Bot', r: /(nuhk|Googlebot|Yammybot|Openbot|Slurp|MSNBot|Ask Jeeves\/Teoma|ia_archiver|bingbot|Baiduspider|DuckDuckBot|YandexBot)/}
     ];
     for (let id in clientStrings) {
       let cs = clientStrings[id];
@@ -301,16 +328,20 @@ export class AngularDeviceInformationService {
 
 export const MOBILES_RE = {
   // tslint:disable-next-line:max-line-length
+  // Google Pixel phones (2016-2026)
+  GOOGLE_PIXEL: /Pixel [2-9]a?( XL)?|Pixel Pro|Pixel [0-9]+ Pro|Pixel Fold|Pixel 6|Pixel 6 Pro|Pixel 6a|Pixel 7|Pixel 7 Pro|Pixel 7a|Pixel 8|Pixel 8 Pro|Pixel 8a|Pixel 9|Pixel 9 Pro|Pixel 9 Pro XL|Pixel 9 Pro Fold/,
   HTC: /HTC|HTC.*(Sensation|Evo|Vision|Explorer|6800|8100|8900|A7272|S510e|C110e|Legend|Desire|T8282)|APX515CKT|Qtek9090|APA9292KT|HD_mini|Sensation.*Z710e|PG86100|Z715e|Desire.*(A8181|HD)|ADR6200|ADR6400L|ADR6425|001HT|Inspire 4G|Android.*\bEVO\b|T-Mobile G1|Z520m|Android [0-9.]+; Pixel/,
   NEXUS_PHONE: /Nexus One|Nexus S|Galaxy.*Nexus|Android.*Nexus.*Mobile|Nexus 4|Nexus 5|Nexus 6/,
   DELL: /Dell[;]? (Streak|Aero|Venue|Venue Pro|Flash|Smoke|Mini 3iX)|XCD28|XCD35|\b001DL\b|\b101DL\b|\bGS01\b/,
+  // Motorola/Lenovo phones (including Edge, Razr, G series)
   MOTOROLA: new RegExp(`Motorola|DROIDX|DROID BIONIC|\\bDroid\\b.*Build|Android.*Xoom|HRI39|MOT-|A1260|A1680|A555|A853|
       A855|A953|A955|A956|Motorola.*ELECTRIFY|Motorola.*i1|i867|i940|MB200|MB300|MB501|MB502|MB508|MB511|
       MB520|MB525|MB526|MB611|MB612|MB632|MB810|MB855|MB860|MB861|MB865|MB870|ME501|ME502|ME511|ME525|ME600|
       ME632|ME722|ME811|ME860|ME863|ME865|MT620|MT710|MT716|MT720|MT810|MT870|MT917|Motorola.*TITANIUM|WX435|
       WX445|XT300|XT301|XT311|XT316|XT317|XT319|XT320|XT390|XT502|XT530|XT531|XT532|XT535|XT603|XT610|XT611|
       XT615|XT681|XT701|XT702|XT711|XT720|XT800|XT806|XT860|XT862|XT875|XT882|XT883|XT894|XT901|XT907|XT909|
-      XT910|XT912|XT928|XT926|XT915|XT919|XT925|XT1021|\\bMoto E\\b|XT1068|XT1092|XT1052`),
+      XT910|XT912|XT928|XT926|XT915|XT919|XT925|XT1021|\\bMoto E\\b|XT1068|XT1092|XT1052|
+      moto g|moto e|moto z|motorola edge|motorola razr|XT2[0-9]{3}|XT21[0-9]{2}|XT22[0-9]{2}|XT23[0-9]{2}`),
   SAMSUNG: new RegExp(`\\bSamsung\\b|SM-G950F|SM-G955F|SM-G9250|GT-19300|SGH-I337|BGT-S5230|GT-B2100|GT-B2700|GT-B2710|
       GT-B3210|GT-B3310|GT-B3410|GT-B3730|GT-B3740|GT-B5510|GT-B5512|GT-B5722|GT-B6520|GT-B7300|GT-B7320|
       GT-B7330|GT-B7350|GT-B7510|GT-B7722|GT-B7800|GT-C3010|GT-C3011|GT-C3060|GT-C3200|GT-C3212|GT-C3212I|
@@ -400,18 +431,64 @@ export const MOBILES_RE = {
   VITA: /\bVita\b/,
   BLACKBERRY: /\bBlackBerry\b|\bBB10\b|rim[0-9]+/,
   FIREFOX_OS: /\bFirefox-OS\b/,
-  IPHONE: /\biPhone\b/,
+  IPHONE: /\biPhone\b|\biPhone1[0-6]\b/,
   iPod: /\biPod\b/,
   ANDROID: /\bAndroid\b/,
   WINDOWS_PHONE: /\bWindows-Phone\b/,
+  // OnePlus phones (2014-2026)
+  ONEPLUS: /OnePlus|ONEPLUS|ONE A200[0-9]|ONE E100[0-9]|IN201[0-9]|IN202[0-9]|LE211[0-9]|CPH2[0-9]{3}|NE2[0-9]{3}|PHB110|GM1[0-9]{3}|HD1[0-9]{3}|KB2[0-9]{3}|LE2[0-9]{3}|DN2[0-9]{3}|NE2[0-9]{3}|CPH2[0-9]{3}/,
+  // Xiaomi phones (Mi, Redmi, POCO, Black Shark)
+  XIAOMI: new RegExp(`Xiaomi|MI [0-9A-Z]+|Redmi|POCO|Black Shark|Mi 9|Mi 10|Mi 11|Mi 12|Mi 13|Mi 14|
+      Mi Note [0-9]+|Redmi Note [0-9]+|Redmi [0-9]+|POCO [A-Z][0-9]+|POCO X[0-9]+|POCO M[0-9]+|POCO F[0-9]+|
+      Redmi K[0-9]+|Mi MIX [0-9]+|Mi CC[0-9]+|2[0-9]{6}[A-Z]{2,3}|M2[0-9]{3}[A-Z][0-9][A-Z]{1,2}|
+      22[0-9]{5}[A-Z]{2,3}|23[0-9]{5}[A-Z]{2,3}|24[0-9]{5}[A-Z]{2,3}|25[0-9]{5}[A-Z]{2,3}|26[0-9]{5}[A-Z]{2,3}`),
+  // OPPO phones (including Find, Reno series)
+  OPPO: new RegExp(`OPPO|CPH[0-9]{4}|PCEM00|PCAM00|PCLM10|PDBM00|PDYM20|PDSM00|PDHM00|PFGM00|
+      Find X[0-9]?|Reno[0-9]*|OPPO A[0-9]+|OPPO F[0-9]+|OPPO K[0-9]+|ColorOS`),
+  // Vivo phones (including X, V, Y, iQOO series)
+  VIVO: new RegExp(`vivo|V[0-9]{4}[A-Z]?|Y[0-9]{2}[A-Z]?|iQOO|X[0-9]{2}[A-Z]?|NEX|
+      vivo X[0-9]+|vivo V[0-9]+|vivo Y[0-9]+|vivo S[0-9]+|vivo T[0-9]+|I[0-9]{4}`),
+  // Realme phones
+  REALME: new RegExp(`realme|RMX[0-9]{4}|Realme [0-9]+|Realme GT|Realme C[0-9]+|Realme Narzo|
+      Realme X[0-9]*|Realme Q[0-9]*`),
+  // Nothing Phone
+  NOTHING: /Nothing Phone|A063/,
+  // Honor phones (post-Huawei separation)
+  HONOR: new RegExp(`HONOR|Honor|ANY-[A-Z]{2}[0-9]+|DUA-[A-Z]{2}[0-9]+|FNE-[A-Z]{2}[0-9]+|
+      Magic[0-9]+|Honor [0-9]+|Honor X[0-9]+|Honor Play|REA-[A-Z]{2}[0-9]+|CRT-[A-Z]{2}[0-9]+`),
+  // Huawei phones (P, Mate, Nova series)
+  HUAWEI: new RegExp(`Huawei|HUAWEI|ALP-[A-Z]{2}[0-9]+|ANA-[A-Z]{2}[0-9]+|ANE-[A-Z]{2}[0-9]+|
+      BAH[0-9]-[A-Z][0-9]+|BLA-[A-Z]{2}[0-9]+|CLT-[A-Z]{2}[0-9]+|ELE-[A-Z]{2}[0-9]+|EML-[A-Z]{2}[0-9]+|
+      EVR-[A-Z]{2}[0-9]+|HMA-[A-Z]{2}[0-9]+|JNY-[A-Z]{2}[0-9]+|LYA-[A-Z]{2}[0-9]+|MAR-[A-Z]{2}[0-9]+|
+      NOH-[A-Z]{2}[0-9]+|OCE-[A-Z]{2}[0-9]+|P[0-9]+ Pro|P[0-9]+ Lite|P[0-9]+|Mate [0-9]+|Nova [0-9]+|
+      Y[0-9]+ [0-9]{4}|HarmonyOS`),
+  // Asus ROG Phone & Zenfone
+  ASUS_PHONE: /ROG Phone|ASUS_I00[0-9][A-Z]?|ASUS_AI2[0-9]{3}|ZenFone|ASUS_Z[0-9]{3}[A-Z]{2}/,
+  // Google/Android One devices
+  ANDROID_ONE: /Android One|Mi A[0-9]/,
+  // Tecno, Infinix, itel (Transsion brands)
+  TECNO: /TECNO|Infinix|itel|SPARK|CAMON|PHANTOM|POVA|HOT|NOTE [0-9]+|X[0-9]{3}[A-Z]?/,
+  // ZTE phones
+  ZTE: /ZTE|nubia|Red Magic|NX[0-9]{3}[A-Z]|A[0-9]{4}[A-Z]?/,
+  // Meizu phones
+  MEIZU: /Meizu|MX[0-9]|M[0-9]+ Note|PRO [0-9]/,
+  // Fairphone (sustainable phones)
+  FAIRPHONE: /Fairphone|FP[0-9]/,
+  // Sony Xperia modern
+  SONY_XPERIA: /Xperia [0-9]+|XQ-[A-Z]{2}[0-9]+|SO-[0-9]{2}[A-Z]/,
+  // Gaming phones
+  GAMING_PHONES: /Black Shark|Red Magic|ROG Phone|Legion Phone|REDMAGIC/,
   GENERIC_PHONE: new RegExp(`Tapatalk|PDA;|SAGEM|\\bmmp\\b|pocket|\\bpsp\\b|symbian|Smartphone|smartfon|treo|up.browser|
         up.link|vodafone|\\bwap\\b|nokia|Nokia|Series40|Series60|S60|SonyEricsson|N900|MAUI.*WAP.*Browser`),
 };
 
 export const TABLETS_RE = {
-  iPad: /iPad|iPad.*Mobile/,
+  // Apple iPads (all generations including M-series chips)
+  iPad: /iPad|iPad.*Mobile|iPad Pro|iPad Air|iPad mini/,
   NexusTablet: /Android.*Nexus[\s]+(7|9|10)/,
-  GoogleTablet: /Android.*Pixel C/,
+  // Google Pixel Tablet
+  GoogleTablet: /Android.*Pixel C|Pixel Tablet/,
+  // Samsung Galaxy Tab (including Tab S7, S8, S9, A series, FE series)
   SamsungTablet: new RegExp(`SAMSUNG.*Tablet|Galaxy.*Tab|SC-01C|GT-P1000|GT-P1003|GT-P1010|GT-P3105|GT-P6210|
         GT-P6800|GT-P6810|GT-P7100|GT-P7300|GT-P7310|GT-P7500|GT-P7510|SCH-I800|SCH-I815|SCH-I905|
         SGH-I957|SGH-I987|SGH-T849|SGH-T859|SGH-T869|SPH-P100|GT-P3100|GT-P3108|GT-P3110|GT-P5100|
@@ -430,11 +507,15 @@ export const TABLETS_RE = {
         SM-T350|SM-T550|SM-T9000|SM-P9000|SM-T705Y|SM-T805|GT-P3113|SM-T710|SM-T810|SM-T815|SM-T360|SM-T533|
         SM-T113|SM-T335|SM-T715|SM-T560|SM-T670|SM-T677|SM-T377|SM-T567|SM-T357T|SM-T555|SM-T561|SM-T713|
         SM-T719|SM-T725|SM-T813|SM-T819|SM-T580|SM-T590|SM-T355Y?|SM-T280|SM-T817A|SM-T820|SM-W700|SM-P580|SM-T587|SM-P350|
-        SM-P555M|SM-P355M|SM-T113NU|SM-T815Y|SM-T585|SM-T285|SM-T825|SM-W708|SM-T835|SM-P585Y`),
+        SM-P555M|SM-P355M|SM-T113NU|SM-T815Y|SM-T585|SM-T285|SM-T825|SM-W708|SM-T835|SM-P585Y|
+        SM-T870|SM-T875|SM-T970|SM-T975|SM-T976B|SM-X700|SM-X706B|SM-X800|SM-X806B|SM-X900|SM-X906B|
+        SM-X710|SM-X716B|SM-X810|SM-X816B|SM-X910|SM-X916B|SM-X510|SM-X610|
+        SM-T730|SM-T736B|SM-T733|SM-T220|SM-T225|SM-T505|SM-T500|SM-T307U|SM-T307|
+        SM-X200|SM-X205|SM-X115|SM-X110|SM-P610|SM-P615|SM-P613|SM-P619`),
   Kindle: new RegExp(`Kindle|Silk.*Accelerated|Android.*\\b(KFOT|KFTT|KFJWI|KFJWA|KFOTE|KFSOWI|KFTHWI|KFTHWA|KFAPWI|
         KFAPWA|WFJWAE|KFSAWA|KFSAWI|KFASWI|KFARWI|KFFOWI|KFGIWI|KFMEWI)\\b|Android.*Silk\/[0-9.]+ like Chrome\
         /[0-9.]+ (?!Mobile)`),
-  SurfaceTablet: /Windows NT [0-9.]+; ARM;.*(Tablet|ARMBJS)/,
+  SurfaceTablet: /Windows NT [0-9.]+; ARM;.*(Tablet|ARMBJS)|Surface Pro|Surface Go|Surface Book/,
   HPTablet: /HP Slate (7|8|10)|HP ElitePad 900|hp-tablet|EliteBook.*Touch|HP 8|Slate 21|HP SlateBook 10/,
   AsusTablet: new RegExp(`^.*PadFone((?!Mobile).)*$|Transformer|TF101|TF101G|TF300T|TF300TG|TF300TL|TF700T|TF700KL|
         TF701T|TF810C|ME171|ME301T|ME302C|ME371MG|ME370T|ME372MG|ME172V|ME173X|ME400C|
@@ -457,9 +538,13 @@ export const TABLETS_RE = {
         PMP5597D|PMP5597|PMP7100D|PER3464|PER3274|PER3574|PER3884|PER5274|PER5474|PMP5097CPRO|PMP5097|PMP7380D|
         PMP5297C|PMP5297C_QUAD|PMP812E|PMP812E3G|PMP812F|PMP810E|PMP880TD|PMT3017|PMT3037|PMT3047|PMT3057|PMT7008|
         PMT5887|PMT5001|PMT5002`),
+  // Lenovo tablets (Tab P11, P12, M10, Yoga Tab, Legion Tab)
   LenovoTablet: new RegExp(`Lenovo TAB|Idea(Tab|Pad)( A1|A10| K1|)|ThinkPad([ ]+)?Tablet|YT3-850M|YT3-X90L|YT3-X90F|
         YT3-X90X|Lenovo.*(S2109|S2110|S5000|S6000|K3011|A3000|A3500|A1000|A2107|A2109|A1107|A5500|A7600|B6000|
-        B8000|B8080)(-|)(FL|F|HV|H|)|TB-X606F|TB-X103F|TB-X304F|TB-X304L|TB-X704F|TB-8703F|Tab2A7-10F|TB2-X30L|TB-8504F`),
+        B8000|B8080)(-|)(FL|F|HV|H|)|TB-X606F|TB-X103F|TB-X304F|TB-X304L|TB-X704F|TB-8703F|Tab2A7-10F|TB2-X30L|TB-8504F|
+        TB-J606F|TB-J606L|TB-J616F|TB-J706F|TB-J706L|TB-X605F|TB-X605L|TB-X505F|TB-X505L|TB-X306F|TB-X306X|
+        TB-128FU|TB-138FC|TB-J607F|TB-J607Z|TB-X6C6F|TB-X6C6X|YT-J706F|YT-J706X|YT-K606F|
+        Yoga Tab|Legion Y700|TB-9707F`),
   DellTablet: /Venue 11|Venue 8|Venue 7|Dell Streak 10|Dell Streak 7/,
   YarvikTablet: new RegExp(`Android.*\\b(TAB210|TAB211|TAB224|TAB250|TAB260|TAB264|TAB310|TAB360|TAB364|TAB410|TAB411|
         TAB420|TAB424|TAB450|TAB460|TAB461|TAB464|TAB465|TAB467|TAB468|TAB07-100|TAB07-101|TAB07-150|TAB07-151|
@@ -498,9 +583,12 @@ export const TABLETS_RE = {
   FlyTablet: /IQ310|Fly Vision/,
   bqTablet: new RegExp(`Android.*(bq)?.*(Elcano|Curie|Edison|Maxwell|Kepler|Pascal|Tesla|Hypatia|Platon|Newton|
         Livingstone|Cervantes|Avant|Aquaris ([E|M]10|M8))|Maxwell.*Lite|Maxwell.*Plus`),
+  // Huawei MatePad series (including MatePad Pro, MatePad 11)
   HuaweiTablet:
     new RegExp(`MediaPad|MediaPad 7 Youth|MediaPad T3 10|IDEOS S7|S7-201c|S7-202u|S7-101|S7-103|S7-104|S7-105|S7-106|
-        S7-201|S7-Slim|M2-A01L|BAH-L09|BAH-W09|AGS-W09`),
+        S7-201|S7-Slim|M2-A01L|BAH-L09|BAH-W09|AGS-W09|AGS2-W09|AGS2-L09|AGS3-W09|AGS3-L09|
+        MatePad|MatePad Pro|MatePad 11|DBY-W09|DBY-L09|MRR-W29|MRR-W19|BTK-W09|BTK-L09|
+        BAH3-W09|BAH3-L09|BAH4-W09|BAH4-L09|GOT-W09|GOT-W29|GOT-AL09|WGR-W09|WGR-W19`),
   NecTablet: /\bN-06D|\bN-08D/,
   PantechTablet: /Pantech.*P4100/,
   BronchoTablet: /Broncho.*(N701|N708|N802|a710)/,
@@ -628,6 +716,31 @@ export const TABLETS_RE = {
         FREEDOM|CHICAGO|CLEVELAND|BALTIMORE-GH|IOWA|BOSTON|SEATTLE|PHOENIX|DALLAS|IN 101|MasterChef)\\b`),
   MediacomTablet: 'M-MPI10C3G|M-SP10EG|M-SP10EGP|M-SP10HXAH|M-SP7HXAH|M-SP10HXBH|M-SP8HXAH|M-SP8MXA',
   MiTablet: /\bMI PAD\b|\bHM NOTE 1W\b/,
+  // Xiaomi Pad series (Pad 5, Pad 6, Redmi Pad)
+  XiaomiTablet: new RegExp(`Xiaomi Pad|Mi Pad|Redmi Pad|POCO Pad|
+        21051182G|22081281AC|22081283C|23043RP34G|23073RPBFC|23073RPBFL|
+        2109119DG|2206123SC|23046RP50C|23046RP50G|24053RP02A`),
+  // OnePlus Pad
+  OnePlusPad: /OnePlus Pad|OPD2203|OPD2101/,
+  // Realme Pad series
+  RealmePad: /realme Pad|Realme Pad|RMP2102|RMP2103|RMP2105|RMP2106/,
+  // OPPO Pad series
+  OppoPad: /OPPO Pad|OPD2101|OPD2102/,
+  // Vivo Pad
+  VivoPad: /vivo Pad/,
+  // Honor Pad
+  HonorPad: /HONOR Pad|Honor Pad|AGS-W09-HN|AGS-L09-HN|HEY-W09/,
+  // TCL tablets
+  TCLTablet: /TCL TAB|NXTPAPER|9160G|9080G/,
+  // Nokia tablets
+  NokiaTablet: /Nokia T[0-9]+/,
+  // Amazon Fire tablets
+  FireTablet: new RegExp(`KFTT|KFOT|Kindle Fire|Silk|KFJWI|KFJWA|KFSOWI|KFTH[W]?[AI]|
+        KFAPW[AI]|KFARWI|KFASWI|KFFOW[I]?|KFGIWI|KFMEWI|KFSAW[AI]|KFTBWI|KFTRWI|KFTRPWI`),
+  // Alcatel tablets
+  AlcatelTablet: /Alcatel.*Tab|ALCATEL ONE.*TAB|Pixi [0-9]/,
+  // Nothing Pad (future-proofing)
+  NothingTablet: /Nothing Pad/,
   NibiruTablet: /Nibiru M1|Nibiru Jupiter One/,
   NexoTablet: /NEXO NOVA|NEXO 10|NEXO AVIO|NEXO FREE|NEXO GO|NEXO EVO|NEXO 3G|NEXO SMART|NEXO KIDDO|NEXO MOBI/,
   LeaderTablet: new RegExp(`TBLT10Q|TBLT10I|TBL-10WDKB|TBL-10WDKBO2013|TBL-W230V2|TBL-W450|TBL-W500|SV572|TBLT7I|
