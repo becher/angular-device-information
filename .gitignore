@@ -46,4 +46,7 @@ testem.log
 Thumbs.db
 
 #cache
-.angular/cache
+.angular/
+node_modules/
+dist/
+*.log
