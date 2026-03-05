@@ -30,14 +30,14 @@ export class AngularDeviceInformationService {
       this.userAgent = window.navigator.userAgent;
     }
     this.filter = new Filter();
-    this.setDeviceInfo(this.userAgent);
+    this.deviceInfo = this.buildDeviceInfo(this.userAgent);
   }
 
   /**
    * @desc Sets the initial value of the device when the service is initiated.
    * This value is later accessible for usage
    */
-  private setDeviceInfo(userAgent: string): void {
+  private buildDeviceInfo(userAgent: string): DeviceInfo {
     const unknown = '-';
 
     // screen (SSR-safe: guard against missing screen object)
@@ -254,8 +254,8 @@ export class AngularDeviceInformationService {
         osVersion = osVersion.replaceAll('_', '.');
         break;
     }
-    this.deviceInfo = {
-      userAgent: this.userAgent,
+    return {
+      userAgent: userAgent,
       screen_resolution: screenSize,
       browser : browser,
       browserVersion: version,
@@ -267,10 +267,16 @@ export class AngularDeviceInformationService {
   }
 
   /**
-   * @desc Returns the device information
+   * @desc Returns the device information.
+   * If a userAgent string is provided, returns a fresh DeviceInfo for that UA.
+   * Otherwise returns the cached info detected at construction time.
+   * @param userAgent optional UA string to analyse on the fly
    * @returns the device information object.
    */
-  public getDeviceInfo(): DeviceInfo {
+  public getDeviceInfo(userAgent?: string): DeviceInfo {
+    if (userAgent !== undefined) {
+      return this.buildDeviceInfo(userAgent);
+    }
     return this.deviceInfo;
   }
 
@@ -298,7 +304,18 @@ export class AngularDeviceInformationService {
     const match = Object.keys(TABLETS_RE).find(mobile => {
       return !!this.filter.test(userAgent, TABLETS_RE[mobile]);
     });
-    return !!match;
+    if (match) {
+      return true;
+    }
+    // Modern iPadOS (15+) sends a macOS desktop-class UA.
+    // Detect it via: Macintosh in UA + touch support (maxTouchPoints > 1).
+    if (isPlatformBrowser(this.platformId)
+        && typeof navigator !== 'undefined'
+        && /Macintosh/.test(userAgent)
+        && navigator.maxTouchPoints > 1) {
+      return true;
+    }
+    return false;
   }
 
   /**
