@@ -26,6 +26,10 @@
 - 🛡️ **Fully SSR-safe** — all `screen`, `navigator`, `document` accesses guarded for server-side rendering
 - 📦 **Angular 14 → 21** support — single version works across 8 major Angular releases
 - 🔍 Browser version now extracted purely from `userAgent` — future-proof and standards-compliant
+- 🧭 **Hybrid regex modernization (2024–2026)** — major brands (Samsung, Pixel, Xiaomi, OPPO, OnePlus, Vivo, Realme, Huawei/Honor, etc.) now use future-proof, compact regex patterns while preserving 30+ legacy brand patterns for zero regressions. This keeps the library maintainable and backward-compatible.
+- 🪄 **Windows 11 detection via Client Hints** — when available the service uses `navigator.userAgentData.getHighEntropyValues(['platformVersion'])` to distinguish Windows 11 (platformVersion major ≥ 13) from Windows 10 (classic UA reports `Windows NT 10.0` for both).
+- ⚖️ **New API: `getPreciseDeviceInfo()`** — async helper that waits for Client Hints to return the most accurate OS information (useful when you need guaranteed Windows 11 detection).
+- ✅ **Unit tests:** comprehensive suite expanded and passing (now **177** unit tests covering modern UAs, iPad desktop-mode, Client Hints, SSR safety and export patterns).
 
 ---
 
@@ -152,6 +156,17 @@ console.log(info.screen_resolution);  // '1920 x 1080'
 console.log(info.cookies);            // true | false
 console.log(info.userAgent);          // raw user-agent string
 ```
+
+### Precise Windows 11 detection (Client Hints)
+
+When you need a guaranteed OS value (Windows 11 vs Windows 10), use the async helper `getPreciseDeviceInfo()` which will attempt to query the User-Agent Client Hints API (`navigator.userAgentData.getHighEntropyValues(['platformVersion'])`) when available. If Client Hints are not present or the browser denies access, the method falls back to the UA-based detection.
+
+```typescript
+// Async: waits for Client Hints when available
+const precise = await this.device.getPreciseDeviceInfo();
+console.log(precise.os); // 'Windows 11' (if platformVersion >= 13) or 'Windows'
+```
+
 
 ### Real-world example — adaptive layout
 

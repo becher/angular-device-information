@@ -33,7 +33,7 @@ export class AngularDeviceInformationService {
     this.filter = new Filter();
     this.deviceInfo = this.buildDeviceInfo(this.userAgent);
 
-    // Attempt Windows 11 detection via Client Hints (fire-and-forget) new
+    // Attempt Windows 11 detection via Client Hints (fire-and-forget) new API, so we can refine Windows 10 vs 11 over time if/when Client Hints becomes available.
     if (this.deviceInfo.os === 'Windows' && isPlatformBrowser(this.platformId)) {
       this.refineWindowsVersion(this.deviceInfo);
     }
