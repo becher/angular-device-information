@@ -18,6 +18,7 @@ export interface DeviceInfo {
 @Injectable({
   providedIn: 'root'
 })
+
 export class AngularDeviceInformationService {
   private userAgent = '';
   private deviceInfo: DeviceInfo;
@@ -32,7 +33,7 @@ export class AngularDeviceInformationService {
     this.filter = new Filter();
     this.deviceInfo = this.buildDeviceInfo(this.userAgent);
 
-    // Attempt Windows 11 detection via Client Hints (fire-and-forget)
+    // Attempt Windows 11 detection via Client Hints (fire-and-forget) new
     if (this.deviceInfo.os === 'Windows' && isPlatformBrowser(this.platformId)) {
       this.refineWindowsVersion(this.deviceInfo);
     }
