@@ -20,7 +20,7 @@
 
 ---
 
-## 🆕 What's New in v5.0.0
+## 🆕 What's New in v5.x.x
 
 - 🚫 **Removed all deprecated browser APIs** — no more `navigator.appVersion` or `navigator.appName`
 - 🛡️ **Fully SSR-safe** — all `screen`, `navigator`, `document` accesses guarded for server-side rendering
@@ -232,7 +232,7 @@ export class LayoutComponent implements OnInit {
 
 ## 🔒 No Deprecated APIs
 
-Version 5.0.0 removes **all** deprecated browser APIs:
+Version 5.x.x removes **all** deprecated browser APIs:
 
 | Deprecated API (removed) | Replaced with |
 |---------------------------|---------------|
@@ -265,10 +265,13 @@ Windows 10/11, macOS Monterey/Ventura/Sonoma/Sequoia, Android 10–15, iOS 14–
 
 | Angular version | Library version | Status |
 |-----------------|-----------------|--------|
-| 8 – 13 | 1.x | Legacy |
-| 14 – 21 | **5.0.0** (latest) | ✅ Current |
+| Angular 8–13 | v 1.x |
+| Angular 14.x | v 2.x |
+| Angular 15.x | v 3.x |
+| Angular 16.x | v 4.x |
+| Angular 14–19 | (latest) |
 
-> **v5.0.0** is a single build that works across Angular 14, 15, 16, 17, 18, 19, 20, and 21.
+> **v5.x.x** is a single build that works across Angular 14, 15, 16, 17, 18, 19, 20, and 21.
 
 ---
 

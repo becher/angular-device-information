@@ -231,7 +231,7 @@ Windows 10/11, macOS Monterey/Ventura/Sonoma/Sequoia, Android 10-15, iOS 14-18, 
 | Angular 14.x | v 2.x |
 | Angular 15.x | v 3.x |
 | Angular 16.x | v 4.x |
-| Angular 14–19 (latest) | v 2.0.0+ (current) |
+| Angular 14–19 | (latest) |
 
 ---
 
